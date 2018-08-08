@@ -6,7 +6,7 @@ import AboutUser from './components/aboutUser';
 import LoginForm from './components/loginForm';
 
 
-import '../src/style/App.css';
+//import '../src/style/App.css';
 
 export default class App extends Component {
   render() {
@@ -15,7 +15,6 @@ export default class App extends Component {
 			<Router>
 				<div>
 					<Navigation/>
-
 					<Route exact path="/gallery" component={Gallery} />
 					<Route path="/about" component={AboutUser} />
 					<Route path="/login" component={LoginForm} />

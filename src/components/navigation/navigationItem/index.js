@@ -6,7 +6,7 @@ const NavigationItem = (props) => {
 
 	return(
 		<Link to={link}>{name}</Link>
-	)
+		)
 }
 
 export default NavigationItem;

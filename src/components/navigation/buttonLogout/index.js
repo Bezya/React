@@ -6,7 +6,7 @@ const Logout = (props) => {
 
 	return(
 		 <Link to={link}>
-		 <button>{name}</button>
+		 	<button className = "btn btn-outline-primary" type="submit">{name}</button>
 		 </Link>
 	)
 }
