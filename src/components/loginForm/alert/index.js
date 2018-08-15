@@ -9,9 +9,14 @@ export default class ErrorMsg extends Component{
 		}
 	}
 
+	getErrorMsg(errorMsg){
+		this.setState({ msg: errorMsg })
+	}
+	
 	render(){
 		return(
-			<div className="alert alert-danger" role="alert">msg</div>
+			<Alert bsStyle="danger" role="alert">{this.getErrorMsg(errorMsg)}
+			</Alert>
 		)
 	}
 }

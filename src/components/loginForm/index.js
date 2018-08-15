@@ -1,47 +1,81 @@
 import React, {Component} from 'react';
-import {Button} from 'react-bootstrap';
+import {FormGroup, ControlLabel, FormControl, Button} from 'react-bootstrap';
+import { users } from '../../db';
+import '../loginForm/loginForm.css';
+
 
 export default class Login extends Component{
 	constructor(props){
 		super(props)
 
 		this.state = {
-			email: '',
+			login: '',
 			password: ''
 		}
 	}
 
-	render(){
-		return(
-			<div>
-				<div>
-					SING IN
-				</div>
-				<form >
-					<div>USERNAME or E-MAIL:</div>    
-						<input value = {this.state.email}/>
-					<div>PASSWORD:</div> 
-						<input value = {this.state.password}/>
-					<div>
-						<Button bsStyle="primary">LOG IN</Button>
-						<a>Remember me</a>
-					</div>
-				</form>
-			</div>
-		)
-	}
-}
+	getValidationState() {
+    const length = this.state.value.length;
+			if (length > 10) return 'success';
+  }
 
-/*
-<form className="form-signin">
-		<h1 className="h3 mb-3 font-weight-normal">Пожалуйста войдите</h1>
-		<label for="inputEmail" className="sr-only">Email</label>
-		<input type="email" className="form-control" required="true" placeholder="email@mail.com" autofocus="" style="background-image: url(&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAASCAYAAABSO15qAAAAAXNSR0IArs4c6QAAAPhJREFUOBHlU70KgzAQPlMhEvoQTg6OPoOjT+JWOnRqkUKHgqWP4OQbOPokTk6OTkVULNSLVc62oJmbIdzd95NcuGjX2/3YVI/Ts+t0WLE2ut5xsQ0O+90F6UxFjAI8qNcEGONia08e6MNONYwCS7EQAizLmtGUDEzTBNd1fxsYhjEBnHPQNG3KKTYV34F8ec/zwHEciOMYyrIE3/ehKAqIoggo9inGXKmFXwbyBkmSQJqmUNe15IRhCG3byphitm1/eUzDM4qR0TTNjEixGdAnSi3keS5vSk2UDKqqgizLqB4YzvassiKhGtZ/jDMtLOnHz7TE+yf8BaDZXA509yeBAAAAAElFTkSuQmCC&quot;); background-repeat: no-repeat; background-attachment: scroll; background-size: 16px 18px; background-position: 98% 50%;"
-				autocomplete="off">
-		<div className="mb-3"></div>
-		<label for="inputPassword" className="sr-only">Пароль</label>
-		<input type="password" id="inputPassword" class="form-control" required="true" placeholder="password" style="background-image: url(&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAASCAYAAABSO15qAAAAAXNSR0IArs4c6QAAAPhJREFUOBHlU70KgzAQPlMhEvoQTg6OPoOjT+JWOnRqkUKHgqWP4OQbOPokTk6OTkVULNSLVc62oJmbIdzd95NcuGjX2/3YVI/Ts+t0WLE2ut5xsQ0O+90F6UxFjAI8qNcEGONia08e6MNONYwCS7EQAizLmtGUDEzTBNd1fxsYhjEBnHPQNG3KKTYV34F8ec/zwHEciOMYyrIE3/ehKAqIoggo9inGXKmFXwbyBkmSQJqmUNe15IRhCG3byphitm1/eUzDM4qR0TTNjEixGdAnSi3keS5vSk2UDKqqgizLqB4YzvassiKhGtZ/jDMtLOnHz7TE+yf8BaDZXA509yeBAAAAAElFTkSuQmCC&quot;); background-repeat: no-repeat; background-attachment: scroll; background-size: 16px 18px; background-position: 98% 50%;"
-				autocomplete="off">
-		<div className="mb-3"></div>
-		<button className="btn btn-lg btn-primary btn-block" type="submit">Войти</button>
-</form>*/
+  handleChange = event => {
+    this.setState({
+      [event.target.id]: event.target.value
+    });
+  }
+
+	onClickSubmit(ev){
+		ev.preventDefault();
+		const { login, password } = this.state;
+		const { setUser } = this.props;
+
+		users.find((user)=> {
+			if(login === user.login && password === user.password) {
+				localStorage.setItem('user', JSON.stringify(user));
+				
+				setUser(user);
+			}
+
+			})
+		console.log(login, password);
+	}
+
+
+
+	render() {
+    return (
+      <div className="Login">
+				<h1 className="h3 mb-3 font-weight-normal text-center">Please sign in</h1>
+        <form onSubmit={this.handleSubmit}>
+          <FormGroup controlId="login" bsSize="large">
+            <ControlLabel className = "inputName">Email</ControlLabel>
+            <FormControl
+              autoFocus
+              type="email"
+              value={this.state.login}
+              onChange={this.handleChange}
+            />
+          </FormGroup>
+          <FormGroup controlId="password" bsSize="large">
+            <ControlLabel className = "inputName">Password</ControlLabel>
+            <FormControl
+              value={this.state.password}
+              onChange={this.handleChange}
+              type="password"
+            />
+          </FormGroup>
+          <Button className = "btn btn-primary"
+            block
+            bsSize="large"
+            //disabled={!this.validateForm()}
+						type="submit"
+						onClick = {(e) => this.onClickSubmit(e)}
+          >
+            Sign in
+          </Button>
+        </form>
+      </div>
+    );
+  }
+}
