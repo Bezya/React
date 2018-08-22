@@ -30,18 +30,14 @@ export default class Login extends Component{
 		const { login, password } = this.state;
 		const { setUser } = this.props;
 
-		users.find((user)=> {
-			if(login === user.login && password === user.password) {
-				localStorage.setItem('user', JSON.stringify(user));
-				
-				setUser(user);
-			}
+		let user = users.find( user => login === user.login && password === user.password)
 
-			})
+		if(user) {
+			localStorage.setItem('user', JSON.stringify(user));
+			setUser(user);
+		}
 		console.log(login, password);
 	}
-
-
 
 	render() {
     return (

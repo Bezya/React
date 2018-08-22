@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
-import GalleryElem from '../galleryElem';
-//import {cars} from '../../../db';
+import PropTypes from 'prop-types';
+
+import GalleryElem from './GalleryElem';
 import { Grid, Col, Row } from 'react-bootstrap';
 
 export default class GalleryList extends Component{
@@ -14,7 +15,7 @@ export default class GalleryList extends Component{
 
 	dateSorting(a,b){
 		const { dateOrder } = this.props;
-		console.log(dateOrder)
+
 		if (dateOrder === 'new') {
 			return a.date > b.date ? 1 : -1;
 		}
@@ -29,9 +30,17 @@ export default class GalleryList extends Component{
 	};*/
 
 	render(){
-		const galleryItems = this.props.cars.sort((a,b) => this.dateSorting(a,b)).map(galleryElem => 
+		let { cars } = this.props
+
+		//if
+		 //this.props.cars.sort((a,b) => this.dateSorting(a,b))
+		 const galleryItems = cars.map(galleryElem => 
 		<Col key ={galleryElem.id} xs={6} md={4}>
-			<GalleryElem key = {galleryElem.id} galleryElem  = {galleryElem}/>
+			<GalleryElem 
+				galleryElem  = { galleryElem }
+				onDelete = { this.props.onDelete}
+				handleUpdate = {this.props.handleUpdate}
+			/>
 		</Col>)
 
 		return (
@@ -39,7 +48,7 @@ export default class GalleryList extends Component{
 				<div className="album py-5 bg-light">
 					<div className="container">
 						<Row>
-							{galleryItems}
+							{ galleryItems }
 						</Row>
 					</div>
 				</div>
@@ -48,8 +57,7 @@ export default class GalleryList extends Component{
 	}
 }
 
-/*<div class="album py-5 bg-light">
-                <div class="container">
-                    <div class="row js-gallery" id="gallery"></div>
-                </div>
-            </div>*/
+GalleryList.propTypes = {
+	onDelete: PropTypes.func.isRequired
+}
+

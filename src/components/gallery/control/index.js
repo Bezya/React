@@ -1,9 +1,10 @@
-import React, {Component} from 'react';
+import React from 'react';
+
 import CreateItem from '../control/CreateItem';
 import GallerySorting from '../control/SortItems';
 //import { Jumbotron, Row } from 'react-bootstrap'; 
 
-import '../../style/App.css'
+import '../../../style/App.css';
 
 const SortAndCreate = (props) => {
 	return(

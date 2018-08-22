@@ -1,21 +1,21 @@
 import React, {Component} from 'react';
+//import PropTypes from 'prop-types';
 import ReactModal from 'react-modal';
 import {Modal, FormGroup, ControlLabel, FormControl, Button} from "react-bootstrap";
-//import CreateAndUpdateForm from '../../modalWindow';
-import {cars} from "../../../db";
+
 const customStyles = {
+
   content : {
-    top                   : '50%',
-    left                  : '50%',
-    right                 : 'auto',
-    bottom                : 'auto',
-    marginRight           : '-50%',
-    transform             : 'translate(-50%, -50%)'
+    top           : '50%',
+    left          : '50%',
+    right         : 'auto',
+    bottom        : 'auto',
+    marginRight   : '-50%',
+    transform      : 'translate(-50%, -50%)'
   }
 };
 
-
-export default class CreateItem extends React.Component{
+export default class CreateItem extends Component{
 	constructor(props, context) {
 		super(props, context);
 		
@@ -27,7 +27,7 @@ export default class CreateItem extends React.Component{
 			url: "",
 			name: "",
 			text: "",
-			date: new Date
+			date: new Date()
 		}
 
 	}
@@ -94,8 +94,6 @@ export default class CreateItem extends React.Component{
 					 <Button onClick={this.createItem}>Save</Button>
 				 </Modal.Footer>
         </ReactModal>
-
-				
 		</div>
 		)
 	}
